@@ -40,7 +40,7 @@
 
     .app-container {
       width: 100%;
-      max-width: 950px;
+      max-width: 980px;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -70,7 +70,7 @@
       margin-top: 4px;
     }
 
-    /* CONTROLES (DÍA Y FASE) */
+    /* CONTROLES */
     .controls-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -140,17 +140,23 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
 
-    /* TARJETA HERO: PLAN PARA HOY */
+    /* HERO CARD */
     .hero-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 24px;
       display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-top {
+      display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
     }
 
     .hero-left {
@@ -227,7 +233,69 @@
     .routine-badge .b-value.morn-val { color: #facc15; }
     .routine-badge .b-value.night-val { color: var(--cyan-dot); }
 
-    /* REGLAS CARD ROW */
+    /* CONTENEDOR VISUAL DE PRODUCTOS PARA HOY EN EL HERO */
+    .today-products-container {
+      background: rgba(17, 25, 46, 0.6);
+      border-top: 1px solid var(--border-accent);
+      padding-top: 16px;
+      margin-top: 6px;
+    }
+
+    .today-products-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .today-products-list {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .today-product-pill {
+      background: var(--card-inner);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+
+    .today-product-pill img {
+      width: 36px;
+      height: 48px;
+      object-fit: contain;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 2px;
+    }
+
+    .today-product-info .p-role {
+      font-size: 0.68rem;
+      color: var(--blue-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .today-product-info .p-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    /* REGLAS */
     .rules-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -276,7 +344,7 @@
       color: #fef08a;
     }
 
-    /* SECCIONES: MAÑANA Y NOCHE */
+    /* SECCIÓN RUTINAS */
     .routine-block {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -331,7 +399,7 @@
       border: 1px solid #2a3a5f;
     }
 
-    /* GRID DE PASOS */
+    /* GRID DE PASOS CON IMAGEN */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -342,18 +410,13 @@
       background: var(--card-inner);
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      padding: 16px 14px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       position: relative;
-    }
-
-    .step-card.active-step {
-      border-color: #38bdf8;
-      background: #141f38;
     }
 
     .step-card.vital-step {
@@ -383,6 +446,26 @@
       height: 17px;
       accent-color: #38bdf8;
       cursor: pointer;
+    }
+
+    /* CONTENEDOR DE IMAGEN DEL PASO */
+    .step-img-box {
+      width: 100%;
+      height: 110px;
+      background: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 6px;
+      gap: 4px;
+    }
+
+    .step-img-box img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
     }
 
     .step-name {
@@ -428,9 +511,10 @@
     }
 
     td {
-      padding: 14px;
+      padding: 12px 14px;
       border-bottom: 1px solid #141c30;
       font-size: 0.88rem;
+      vertical-align: middle;
     }
 
     tr:last-child td {
@@ -454,7 +538,18 @@
     .tr-bha { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
     .tr-descanso { background: rgba(0, 210, 170, 0.15); color: #00d2aa; border: 1px solid rgba(0, 210, 170, 0.3); }
 
-    /* RESPONSIVE IPHONE */
+    .table-prod-img {
+      width: 32px;
+      height: 38px;
+      object-fit: contain;
+      background: #ffffff;
+      border-radius: 5px;
+      padding: 2px;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .rules-row {
         grid-template-columns: 1fr;
@@ -520,36 +615,46 @@
       </div>
     </div>
 
-    <!-- TARJETA HERO: PLAN PARA HOY -->
+    <!-- TARJETA HERO: PLAN PARA HOY (DINÁMICO CON FOTOS) -->
     <div class="hero-card">
-      <div class="hero-left">
-        <div class="tag-today-plan">
-          <span class="dot"></span>
-          <span id="labelDiaPlan">PLAN PARA HOY ( LUNES )</span>
+      <div class="hero-top">
+        <div class="hero-left">
+          <div class="tag-today-plan">
+            <span class="dot"></span>
+            <span id="labelDiaPlan">PLAN PARA HOY</span>
+          </div>
+          <div class="hero-title" id="heroNombre">Retinal + Crema Hidratante</div>
+          <div class="hero-sub" id="heroObjetivo">Estimular colágeno y alisar textura superficial.</div>
         </div>
-        <div class="hero-title" id="heroNombre">Retinal + Crema Hidratante</div>
-        <div class="hero-sub" id="heroObjetivo">Estimular colágeno y alisar textura superficial / pocitos.</div>
+
+        <div class="hero-right-badges">
+          <div class="routine-badge">
+            <div class="b-label morn">☀️ Mañana</div>
+            <div class="b-value morn-val">Protección & Azelaico</div>
+          </div>
+          <div class="routine-badge">
+            <div class="b-label night">🌙 Noche</div>
+            <div class="b-value night-val" id="badgeNocheResumen">Activo Fuerte</div>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-right-badges">
-        <div class="routine-badge">
-          <div class="b-label morn">☀️ Mañana</div>
-          <div class="b-value morn-val">Protección & Azelaico</div>
-        </div>
-        <div class="routine-badge">
-          <div class="b-label night">🌙 Noche</div>
-          <div class="b-value night-val" id="badgeNocheResumen">Activo Fuerte</div>
+      <!-- Fila de productos correspondientes a la noche de hoy -->
+      <div class="today-products-container">
+        <div class="today-products-title">📦 Tus productos clave para esta noche:</div>
+        <div class="today-products-list" id="todayProductsList">
+          <!-- Generado dinámicamente -->
         </div>
       </div>
     </div>
 
-    <!-- FILA DE 2 REGLAS CLAVE -->
+    <!-- REGLAS CLAVE -->
     <div class="rules-row">
       <div class="mini-rule-card">
         <div class="mini-icon-box">⏳</div>
         <div class="mini-rule-content">
           <h4 class="gold-title">Regla de Oro: Espera 5 Minutos (Piel Seca)</h4>
-          <p>Aplica el Retinal y el BHA <strong>completamente en seco</strong> tras secarte con la toalla. Con piel húmeda penetran con exceso de velocidad y producen irritación o descamación.</p>
+          <p>Aplica el Retinal y el BHA <strong>completamente en seco</strong> tras secarte. Con piel húmeda penetran con exceso de velocidad y producen irritación.</p>
         </div>
       </div>
 
@@ -557,64 +662,81 @@
         <div class="mini-icon-box">🛡️</div>
         <div class="mini-rule-content">
           <h4 class="blue-title">Regla Fundamental: El Protector no se negocia</h4>
-          <p>Sin SPF 50+ cada mañana (ISDIN o Eucerin Oil Control), las marcas rojas/marrones se oxidan y fijan, y el esfuerzo del retinal nocturno se arruina por completo.</p>
+          <p>Sin SPF 50+ cada mañana (Revox Just), las marcas se oxidan y fijan, arruinando el esfuerzo del retinal nocturno.</p>
         </div>
       </div>
     </div>
 
-    <!-- SECCIÓN: RUTINA DE MAÑANA -->
+    <!-- RUTINA DE MAÑANA (CON IMÁGENES EXACTAS DE PRODUCTO) -->
     <div class="routine-block">
       <div class="block-header">
         <div class="block-header-left">
           <div class="block-icon">☀️</div>
           <div class="block-title">
             <h3>Rutina de Mañana</h3>
-            <p>Idéntica todos los días: Calma inflamación, reduce sebo y previene manchas</p>
+            <p>Idéntica todos los días: Calma inflamación, reduce sebo y previene marcas</p>
           </div>
         </div>
         <span class="pill-status">Fija todos los días</span>
       </div>
 
       <div class="steps-grid">
+        <!-- Paso 1 -->
         <div class="step-card">
           <div class="step-card-header">
             <span class="step-number">PASO 1</span>
             <input type="checkbox">
           </div>
+          <div class="step-img-box">
+            <img src="img/limpiador-ziaja.png" alt="Gel Limpiador Ziaja Manuka Tree" />
+          </div>
           <div class="step-name">Limpieza Suave</div>
-          <div class="step-detail">Gel Limpiador Oil-Free Deliplus + agua templada. Secar a toques.</div>
+          <div class="step-detail">Ziaja Manuka Tree Purifying Gel + agua templada. Secar a toques.</div>
         </div>
 
+        <!-- Paso 2 -->
         <div class="step-card">
           <div class="step-card-header">
             <span class="step-number">PASO 2</span>
             <input type="checkbox">
           </div>
+          <div class="step-img-box">
+            <img src="img/niacinamida-to.png" alt="Niacinamida The Ordinary" style="max-height:85%" />
+            <img src="img/apad-gg.png" alt="aPAD Geek&Gorgeous" style="max-height:85%" />
+          </div>
           <div class="step-name">Antiinflamatorio</div>
-          <div class="step-detail">Sérum Niacinamida (3-4 gotas) + Ácido Azelaico (o aPAD Geek&Gorgeous).</div>
+          <div class="step-detail">Niacinamida 10% (The Ordinary) + aPAD Azelaico (Geek & Gorgeous).</div>
         </div>
 
+        <!-- Paso 3 -->
         <div class="step-card">
           <div class="step-card-header">
             <span class="step-number">PASO 3 (OPCIONAL)</span>
             <input type="checkbox">
           </div>
+          <div class="step-img-box">
+            <img src="img/hidratante-babaria.png" alt="Babaria Gel Ácido Hialurónico" />
+          </div>
           <div class="step-name">Hidratación ligera</div>
-          <div class="step-detail">Solo si notas tirantez: crema con Ácido Hialurónico Deliplus.</div>
+          <div class="step-detail">Solo si notas tirantez: Babaria Crema Facial Gel con Ácido Hialurónico.</div>
         </div>
 
+        <!-- Paso 4 -->
         <div class="step-card vital-step">
           <div class="step-card-header">
             <span class="step-number">PASO 4 (VITAL)</span>
             <input type="checkbox">
           </div>
+          <div class="step-img-box">
+            <img src="img/solar-revox.png" alt="Revox Just Sun Shield SPF 50" />
+          </div>
           <div class="step-name">Protección Solar 50+</div>
-          <div class="step-detail">ISDIN Fusion Water o Eucerin Oil Control. Imprescindible.</div>
+          <div class="step-detail">Revox Just Daily Sun Shield SPF 50 para pieles grasas.</div>
         </div>
       </div>
     </div>
 
-    <!-- SECCIÓN: CALENDARIO NOCTURNO COMPLETO -->
+    <!-- CALENDARIO NOCTURNO SEMANAL -->
     <div class="routine-block">
       <div class="block-header">
         <div class="block-header-left">
@@ -631,13 +753,14 @@
           <thead>
             <tr>
               <th>Día</th>
+              <th>Productos a usar</th>
               <th>Tratamiento Nocturno</th>
               <th>Paso a paso exacto</th>
               <th>Objetivo</th>
             </tr>
           </thead>
           <tbody id="tablaBody">
-            <!-- Rellenado por JS -->
+            <!-- Rellenado por JS con fotos -->
           </tbody>
         </table>
       </div>
@@ -648,24 +771,102 @@
   <script>
     const nombresDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
+    // Catálogo de imágenes para vincular dinámicamente
+    const PROD_IMGS = {
+      limpiador: { img: "img/limpiador-ziaja.png", nombre: "Ziaja Manuka Gel", rol: "Limpiador" },
+      retinal: { img: "img/retinal-gg.png", nombre: "Geek & Gorgeous A-Game 5", rol: "Retinal 0.05%" },
+      bha: { img: "img/limpiador-ziaja.png", nombre: "BHA 2% Salicílico", rol: "Exfoliante BHA" }, // puedes reemplazar con tu foto de BHA
+      hidratante: { img: "img/hidratante-babaria.png", nombre: "Babaria HydraFresh", rol: "Hidratante" }
+    };
+
     const datosFase1 = {
-      1: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal (G&G A-Game 5) + Hidratante", pasos: "Limpieza suave -> Secar 5 min -> Retinal -> Crema Deliplus", objetivo: "Estimular colágeno y alisar pocitos" },
-      2: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso y reparación de barrera" },
-      3: { badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", pasos: "Limpieza suave -> Secar 5 min -> BHA 2% -> Crema Deliplus", objetivo: "Limpiar puntos negros en profundidad" },
-      4: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso y recuperación" },
-      5: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal + Hidratante Deliplus", pasos: "Limpieza suave -> Secar 5 min -> Retinal -> Crema Deliplus", objetivo: "Segunda dosis semanal de renovación celular" },
-      6: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso" },
-      0: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso" }
+      1: { 
+        badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal (G&G A-Game 5) + Hidratante", 
+        pasos: "Limpieza suave -> Secar 5 min -> Retinal -> Crema Babaria", 
+        objetivo: "Estimular colágeno y alisar pocitos",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.retinal, PROD_IMGS.hidratante]
+      },
+      2: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Crema hidratante generosa", 
+        objetivo: "Noche de descanso y reparación de barrera",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      },
+      3: { 
+        badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", 
+        pasos: "Limpieza suave -> Secar 5 min -> BHA 2% -> Crema Babaria", 
+        objetivo: "Limpiar puntos negros en profundidad",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.bha, PROD_IMGS.hidratante]
+      },
+      4: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Crema hidratante generosa", 
+        objetivo: "Noche de descanso y recuperación",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      },
+      5: { 
+        badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Secar 5 min -> Retinal -> Crema Babaria", 
+        objetivo: "Segunda dosis semanal de renovación celular",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.retinal, PROD_IMGS.hidratante]
+      },
+      6: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Crema hidratante generosa", 
+        objetivo: "Noche de descanso",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      },
+      0: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Crema hidratante generosa", 
+        objetivo: "Noche de descanso",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      }
     };
 
     const datosFase2 = {
-      1: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal (G&G A-Game 5) + Hidratante", pasos: "Limpieza -> Esperar 5 min -> Retinal -> Crema Deliplus", objetivo: "Estimular colágeno y textura uniforme" },
-      2: { badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", pasos: "Limpieza -> Esperar 5 min -> BHA -> Crema Deliplus", objetivo: "Desobstruir poros y regular el sebo" },
-      3: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Hidratante reparadora", objetivo: "Descanso y balance de barrera" },
-      4: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal + Hidratante Deliplus", pasos: "Limpieza -> Esperar 5 min -> Retinal -> Crema Deliplus", objetivo: "Acelerar relleno de pocitos y antimarcas" },
-      5: { badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", pasos: "Limpieza -> Esperar 5 min -> BHA -> Crema Deliplus", objetivo: "Poros limpios y piel luminosa" },
-      6: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante", objetivo: "Noche de descanso" },
-      0: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante", objetivo: "Noche de descanso" }
+      1: { 
+        badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal (G&G A-Game 5) + Hidratante", 
+        pasos: "Limpieza -> Esperar 5 min -> Retinal -> Crema Babaria", 
+        objetivo: "Estimular colágeno y textura uniforme",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.retinal, PROD_IMGS.hidratante]
+      },
+      2: { 
+        badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", 
+        pasos: "Limpieza -> Esperar 5 min -> BHA -> Crema Babaria", 
+        objetivo: "Desobstruir poros y regular el sebo",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.bha, PROD_IMGS.hidratante]
+      },
+      3: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Hidratante reparadora", 
+        objetivo: "Descanso y balance de barrera",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      },
+      4: { 
+        badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal + Hidratante Babaria", 
+        pasos: "Limpieza -> Esperar 5 min -> Retinal -> Crema Babaria", 
+        objetivo: "Acelerar renovación celular y marcas",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.retinal, PROD_IMGS.hidratante]
+      },
+      5: { 
+        badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", 
+        pasos: "Limpieza -> Esperar 5 min -> BHA -> Crema Babaria", 
+        objetivo: "Poros limpios y piel luminosa",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.bha, PROD_IMGS.hidratante]
+      },
+      6: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Crema hidratante", 
+        objetivo: "Noche de descanso",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      },
+      0: { 
+        badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Babaria", 
+        pasos: "Limpieza suave -> Crema hidratante", 
+        objetivo: "Noche de descanso",
+        productos: [PROD_IMGS.limpiador, PROD_IMGS.hidratante]
+      }
     };
 
     let faseActual = 1;
@@ -696,7 +897,7 @@
       const data = faseActual === 1 ? datosFase1 : datosFase2;
       const actual = data[diaSeleccionado];
 
-      // Actualizar Hero
+      // Actualizar Encabezado Hero
       document.getElementById("labelDiaPlan").innerText = `PLAN PARA HOY ( ${nombresDias[diaSeleccionado].toUpperCase()} )`;
       document.getElementById("heroNombre").innerText = actual.nombre;
       document.getElementById("heroObjetivo").innerText = actual.objetivo + ".";
@@ -704,7 +905,19 @@
       const badgeNoche = document.getElementById("badgeNocheResumen");
       badgeNoche.innerText = actual.tipo === 'retinal' ? "Retinal Activo" : (actual.tipo === 'bha' ? "BHA Exfoliante" : "Descanso");
 
-      // Actualizar Tabla
+      // Pintar productos visuales en la tarjeta de hoy
+      const heroProdContainer = document.getElementById("todayProductsList");
+      heroProdContainer.innerHTML = actual.productos.map(p => `
+        <div class="today-product-pill">
+          <img src="${p.img}" alt="${p.nombre}" />
+          <div class="today-product-info">
+            <div class="p-role">${p.rol}</div>
+            <div class="p-name">${p.nombre}</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Actualizar Tabla Semanal con miniaturas
       const tbody = document.getElementById("tablaBody");
       tbody.innerHTML = "";
       const orden = [1, 2, 3, 4, 5, 6, 0];
@@ -719,8 +932,11 @@
         if (item.tipo === "retinal") badgeClass = "tr-retinal";
         if (item.tipo === "bha") badgeClass = "tr-bha";
 
+        const miniaturasHtml = item.productos.map(p => `<img src="${p.img}" alt="${p.nombre}" title="${p.nombre}" class="table-prod-img" />`).join('');
+
         tr.innerHTML = `
           <td style="font-weight:700;">${nombresDias[dia]} ${isCurrent ? '<span style="color:#38bdf8; font-size:0.75rem;">●</span>' : ''}</td>
+          <td><div style="display:flex; align-items:center;">${miniaturasHtml}</div></td>
           <td><span class="badge-treatment ${badgeClass}">${item.nombre}</span></td>
           <td style="color:#cbd5e1; font-size:0.83rem;">${item.pasos}</td>
           <td style="color:var(--text-muted); font-size:0.83rem;">${item.objetivo}</td>
