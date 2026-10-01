@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Organizador de Skincare Personalizado</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --card-bg: #0d1322;
+      --card-inner: #11192e;
+      --card-border: #1a2540;
+      --border-accent: #253356;
+      --text-white: #f8fafc;
+      --text-muted: #8e9bb5;
+      --cyan-dot: #00d2aa;
+      --gold-accent: #eab308;
+      --blue-accent: #38bdf8;
+      --purple-accent: #a855f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      padding: 24px 16px 60px;
+      display: flex;
+      justify-content: center;
+      line-height: 1.5;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 950px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* HEADER */
+    .header-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .title-group h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-group p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    /* CONTROLES (DÍA Y FASE) */
+    .controls-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .day-selector-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-accent);
+      padding: 6px 12px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .day-selector-box select {
+      background: #141c30;
+      color: #fff;
+      border: 1px solid #2a3b63;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-auto {
+      background: #1b2640;
+      color: #7dd3fc;
+      border: 1px solid #2f4370;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .phase-toggle-bar {
+      display: flex;
+      background: var(--card-bg);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .phase-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .phase-btn.active {
+      background: #1e293b;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* TARJETA HERO: PLAN PARA HOY */
+    .hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .hero-left {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .tag-today-plan {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tag-today-plan .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan-dot);
+      box-shadow: 0 0 8px var(--cyan-dot);
+    }
+
+    .hero-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .hero-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .hero-right-badges {
+      display: flex;
+      gap: 12px;
+    }
+
+    .routine-badge {
+      background: rgba(14, 21, 37, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 18px;
+      min-width: 130px;
+      text-align: center;
+    }
+
+    .routine-badge .b-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .routine-badge .b-label.morn { color: #f59e0b; }
+    .routine-badge .b-label.night { color: #818cf8; }
+
+    .routine-badge .b-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .routine-badge .b-value.morn-val { color: #facc15; }
+    .routine-badge .b-value.night-val { color: var(--cyan-dot); }
+
+    /* REGLAS CARD ROW */
+    .rules-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .mini-rule-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .mini-icon-box {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: #172033;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      border: 1px solid #233150;
+    }
+
+    .mini-rule-content h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .gold-title { color: #fbbf24; }
+    .blue-title { color: #60a5fa; }
+
+    .mini-rule-content p {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .mini-rule-content strong {
+      color: #fef08a;
+    }
+
+    /* SECCIONES: MAÑANA Y NOCHE */
+    .routine-block {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .block-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .block-icon {
+      width: 36px;
+      height: 36px;
+      background: #182238;
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .block-title h3 {
+      font-size: 1.18rem;
+      font-weight: 700;
+    }
+
+    .block-title p {
+      color: var(--text-muted);
+      font-size: 0.83rem;
+    }
+
+    .pill-status {
+      background: #182238;
+      color: #f59e0b;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid #2a3a5f;
+    }
+
+    /* GRID DE PASOS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .step-card {
+      background: var(--card-inner);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .step-card.active-step {
+      border-color: #38bdf8;
+      background: #141f38;
+    }
+
+    .step-card.vital-step {
+      border: 1px solid #d97706;
+    }
+
+    .step-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .step-card.vital-step .step-number {
+      color: #fbbf24;
+    }
+
+    .step-card input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: #38bdf8;
+      cursor: pointer;
+    }
+
+    .step-name {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .step-card.vital-step .step-name {
+      color: #fde047;
+    }
+
+    .step-detail {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* TABLA SEMANAL */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: #101728;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #141c30;
+      font-size: 0.88rem;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr.highlighted-day {
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .badge-treatment {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tr-retinal { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .tr-bha { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tr-descanso { background: rgba(0, 210, 170, 0.15); color: #00d2aa; border: 1px solid rgba(0, 210, 170, 0.3); }
+
+    /* RESPONSIVE IPHONE */
+    @media (max-width: 768px) {
+      .rules-row {
+        grid-template-columns: 1fr;
+      }
+      .steps-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero-right-badges {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .routine-badge {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px 10px 50px;
+      }
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+      .title-group h1 {
+        font-size: 1.4rem;
+      }
+      .hero-title {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- CABECERA -->
+    <div class="header-area">
+      <div class="title-group">
+        <h1>✨ Organizador de Skincare</h1>
+        <p>Protección, anti-marcas y renovación celular</p>
+      </div>
+
+      <div class="controls-wrapper">
+        <div class="day-selector-box">
+          <span>Hoy es:</span>
+          <select id="selectDia" onchange="seleccionarDiaManual(this.value)">
+            <option value="1">Lunes</option>
+            <option value="2">Martes</option>
+            <option value="3">Miércoles</option>
+            <option value="4">Jueves</option>
+            <option value="5">Viernes</option>
+            <option value="6">Sábado</option>
+            <option value="0">Domingo</option>
+          </select>
+          <button class="btn-auto" onclick="setearHoy()">Auto</button>
+        </div>
+
+        <div class="phase-toggle-bar">
+          <button class="phase-btn active" id="btnFase1" onclick="cambiarFase(1)">Fase 1 (Mes 1)</button>
+          <button class="phase-btn" id="btnFase2" onclick="cambiarFase(2)">Fase 2 (Mes 2+)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA HERO: PLAN PARA HOY -->
+    <div class="hero-card">
+      <div class="hero-left">
+        <div class="tag-today-plan">
+          <span class="dot"></span>
+          <span id="labelDiaPlan">PLAN PARA HOY ( LUNES )</span>
+        </div>
+        <div class="hero-title" id="heroNombre">Retinal + Crema Hidratante</div>
+        <div class="hero-sub" id="heroObjetivo">Estimular colágeno y alisar textura superficial / pocitos.</div>
+      </div>
+
+      <div class="hero-right-badges">
+        <div class="routine-badge">
+          <div class="b-label morn">☀️ Mañana</div>
+          <div class="b-value morn-val">Protección & Azelaico</div>
+        </div>
+        <div class="routine-badge">
+          <div class="b-label night">🌙 Noche</div>
+          <div class="b-value night-val" id="badgeNocheResumen">Activo Fuerte</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILA DE 2 REGLAS CLAVE -->
+    <div class="rules-row">
+      <div class="mini-rule-card">
+        <div class="mini-icon-box">⏳</div>
+        <div class="mini-rule-content">
+          <h4 class="gold-title">Regla de Oro: Espera 5 Minutos (Piel Seca)</h4>
+          <p>Aplica el Retinal y el BHA <strong>completamente en seco</strong> tras secarte con la toalla. Con piel húmeda penetran con exceso de velocidad y producen irritación o descamación.</p>
+        </div>
+      </div>
+
+      <div class="mini-rule-card">
+        <div class="mini-icon-box">🛡️</div>
+        <div class="mini-rule-content">
+          <h4 class="blue-title">Regla Fundamental: El Protector no se negocia</h4>
+          <p>Sin SPF 50+ cada mañana (ISDIN o Eucerin Oil Control), las marcas rojas/marrones se oxidan y fijan, y el esfuerzo del retinal nocturno se arruina por completo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: RUTINA DE MAÑANA -->
+    <div class="routine-block">
+      <div class="block-header">
+        <div class="block-header-left">
+          <div class="block-icon">☀️</div>
+          <div class="block-title">
+            <h3>Rutina de Mañana</h3>
+            <p>Idéntica todos los días: Calma inflamación, reduce sebo y previene manchas</p>
+          </div>
+        </div>
+        <span class="pill-status">Fija todos los días</span>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card-header">
+            <span class="step-number">PASO 1</span>
+            <input type="checkbox">
+          </div>
+          <div class="step-name">Limpieza Suave</div>
+          <div class="step-detail">Gel Limpiador Oil-Free Deliplus + agua templada. Secar a toques.</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card-header">
+            <span class="step-number">PASO 2</span>
+            <input type="checkbox">
+          </div>
+          <div class="step-name">Antiinflamatorio</div>
+          <div class="step-detail">Sérum Niacinamida (3-4 gotas) + Ácido Azelaico (o aPAD Geek&Gorgeous).</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-card-header">
+            <span class="step-number">PASO 3 (OPCIONAL)</span>
+            <input type="checkbox">
+          </div>
+          <div class="step-name">Hidratación ligera</div>
+          <div class="step-detail">Solo si notas tirantez: crema con Ácido Hialurónico Deliplus.</div>
+        </div>
+
+        <div class="step-card vital-step">
+          <div class="step-card-header">
+            <span class="step-number">PASO 4 (VITAL)</span>
+            <input type="checkbox">
+          </div>
+          <div class="step-name">Protección Solar 50+</div>
+          <div class="step-detail">ISDIN Fusion Water o Eucerin Oil Control. Imprescindible.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: CALENDARIO NOCTURNO COMPLETO -->
+    <div class="routine-block">
+      <div class="block-header">
+        <div class="block-header-left">
+          <div class="block-icon">🌙</div>
+          <div class="block-title">
+            <h3>Calendario Nocturno Semanal</h3>
+            <p id="labelCalendarioSub">Fase 1: Adaptación para acostumbrar la piel sin descamación</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Día</th>
+              <th>Tratamiento Nocturno</th>
+              <th>Paso a paso exacto</th>
+              <th>Objetivo</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBody">
+            <!-- Rellenado por JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const nombresDias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+    const datosFase1 = {
+      1: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal (G&G A-Game 5) + Hidratante", pasos: "Limpieza suave -> Secar 5 min -> Retinal -> Crema Deliplus", objetivo: "Estimular colágeno y alisar pocitos" },
+      2: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso y reparación de barrera" },
+      3: { badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", pasos: "Limpieza suave -> Secar 5 min -> BHA 2% -> Crema Deliplus", objetivo: "Limpiar puntos negros en profundidad" },
+      4: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso y recuperación" },
+      5: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal + Hidratante Deliplus", pasos: "Limpieza suave -> Secar 5 min -> Retinal -> Crema Deliplus", objetivo: "Segunda dosis semanal de renovación celular" },
+      6: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso" },
+      0: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante generosa", objetivo: "Noche de descanso" }
+    };
+
+    const datosFase2 = {
+      1: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal (G&G A-Game 5) + Hidratante", pasos: "Limpieza -> Esperar 5 min -> Retinal -> Crema Deliplus", objetivo: "Estimular colágeno y textura uniforme" },
+      2: { badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", pasos: "Limpieza -> Esperar 5 min -> BHA -> Crema Deliplus", objetivo: "Desobstruir poros y regular el sebo" },
+      3: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Hidratante reparadora", objetivo: "Descanso y balance de barrera" },
+      4: { badge: "Retinal Activo", tipo: "retinal", nombre: "Retinal + Hidratante Deliplus", pasos: "Limpieza -> Esperar 5 min -> Retinal -> Crema Deliplus", objetivo: "Acelerar relleno de pocitos y antimarcas" },
+      5: { badge: "BHA Exfoliación", tipo: "bha", nombre: "Ácido Salicílico / BHA 2% + Hidratante", pasos: "Limpieza -> Esperar 5 min -> BHA -> Crema Deliplus", objetivo: "Poros limpios y piel luminosa" },
+      6: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante", objetivo: "Noche de descanso" },
+      0: { badge: "Descanso", tipo: "descanso", nombre: "Solo Limpieza + Hidratante Deliplus", pasos: "Limpieza suave -> Crema hidratante", objetivo: "Noche de descanso" }
+    };
+
+    let faseActual = 1;
+    let diaSeleccionado = new Date().getDay();
+
+    function setearHoy() {
+      diaSeleccionado = new Date().getDay();
+      document.getElementById("selectDia").value = diaSeleccionado;
+      renderApp();
+    }
+
+    function seleccionarDiaManual(val) {
+      diaSeleccionado = parseInt(val);
+      renderApp();
+    }
+
+    function cambiarFase(fase) {
+      faseActual = fase;
+      document.getElementById("btnFase1").classList.toggle("active", fase === 1);
+      document.getElementById("btnFase2").classList.toggle("active", fase === 2);
+      document.getElementById("labelCalendarioSub").innerText = fase === 1 
+        ? "Fase 1: Adaptación para acostumbrar la piel sin descamación" 
+        : "Fase 2: Mantenimiento intensivo (3 noches retinal, 2 noches BHA)";
+      renderApp();
+    }
+
+    function renderApp() {
+      const data = faseActual === 1 ? datosFase1 : datosFase2;
+      const actual = data[diaSeleccionado];
+
+      // Actualizar Hero
+      document.getElementById("labelDiaPlan").innerText = `PLAN PARA HOY ( ${nombresDias[diaSeleccionado].toUpperCase()} )`;
+      document.getElementById("heroNombre").innerText = actual.nombre;
+      document.getElementById("heroObjetivo").innerText = actual.objetivo + ".";
+
+      const badgeNoche = document.getElementById("badgeNocheResumen");
+      badgeNoche.innerText = actual.tipo === 'retinal' ? "Retinal Activo" : (actual.tipo === 'bha' ? "BHA Exfoliante" : "Descanso");
+
+      // Actualizar Tabla
+      const tbody = document.getElementById("tablaBody");
+      tbody.innerHTML = "";
+      const orden = [1, 2, 3, 4, 5, 6, 0];
+
+      orden.forEach(dia => {
+        const item = data[dia];
+        const isCurrent = dia === diaSeleccionado;
+        const tr = document.createElement("tr");
+        if (isCurrent) tr.classList.add("highlighted-day");
+
+        let badgeClass = "tr-descanso";
+        if (item.tipo === "retinal") badgeClass = "tr-retinal";
+        if (item.tipo === "bha") badgeClass = "tr-bha";
+
+        tr.innerHTML = `
+          <td style="font-weight:700;">${nombresDias[dia]} ${isCurrent ? '<span style="color:#38bdf8; font-size:0.75rem;">●</span>' : ''}</td>
+          <td><span class="badge-treatment ${badgeClass}">${item.nombre}</span></td>
+          <td style="color:#cbd5e1; font-size:0.83rem;">${item.pasos}</td>
+          <td style="color:var(--text-muted); font-size:0.83rem;">${item.objetivo}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Inicializar al cargar
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("selectDia").value = diaSeleccionado;
+      renderApp();
+    });
+  </script>
+</body>
+</html>
